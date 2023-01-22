@@ -1,0 +1,27 @@
+.container {
+    padding: 0;
+    margin: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+      Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: #127785;
+    color: aliceblue;
+}
+
+
+/* Header */
+
+/* Main */
+.container main {
+  width: 50%;
+  height: 100%;
+  padding: 50px;
+  text-align: center;
+  margin: auto;
+}
+
+.container main h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+/* Footer */
