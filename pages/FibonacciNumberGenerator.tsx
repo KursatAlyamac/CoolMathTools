@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const FibonacciNumberGenerator = () => {
   const [input, setInput] = useState('');
   const [fibonacciNumbers, setFibonacciNumbers] = useState([]);
   const [error, setError] = useState('');
   const [showButton, setShowButton] = useState(true);
+  const [iter, setIter] = useState(fibonacciIterator());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
+
+  useEffect(() => {
+    setIter(fibonacciIterator());
+  }, [input]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,18 +24,27 @@ const FibonacciNumberGenerator = () => {
     }
 
     setError('');
-    setFibonacciNumbers([1,1]);
+    setFibonacciNumbers([]);
     setShowButton(true);
   };
 
   const handleNextNumber = () => {
-    const nextNumber = fibonacciNumbers[fibonacciNumbers.length - 1] + fibonacciNumbers[fibonacciNumbers.length - 2];
-    setFibonacciNumbers([...fibonacciNumbers, nextNumber]);
-
     if (fibonacciNumbers.length === +input) {
       setShowButton(false);
+    } else {
+      setFibonacciNumbers([...fibonacciNumbers, iter.next().value]);
     }
   };
+
+  function* fibonacciIterator() {
+    let a = 0, b = 1;
+    while (true) {
+      let current = a;
+      a = b;
+      b = current + b;
+      yield current;
+    }
+  }
 
   return (
     <div>
@@ -47,7 +61,7 @@ const FibonacciNumberGenerator = () => {
           <p>Fibonacci Numbers:</p>
           <ul>
             {fibonacciNumbers.map((num, idx) => (
-              <p key={idx}>{num}</p>
+              <li key={idx}>{num}</li>
             ))}
           </ul>
           {showButton && (
